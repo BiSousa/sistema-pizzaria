@@ -18,15 +18,24 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
+    private Double calcularPrecoTotal(Pedido pedido) {
+        return pedido.getItens().stream()
+                .mapToDouble(item -> item.getQuantidade() * item.getPrecoUnitario())
+                .sum();
+    }
+
     public Pedido salvar(Pedido pedido) {
-        // regra de negócio: todo pedido novo começa como PENDENTE
+        if (pedido.getItens() == null || pedido.getItens().isEmpty()) {
+            throw new IllegalArgumentException("Pedido deve conter ao menos um item");
+        }
         pedido.setStatus("PENDENTE");
+        pedido.setPrecoTotal(calcularPrecoTotal(pedido));
         return pedidoRepository.save(pedido);
     }
 
     public Pedido atualizarStatus(Long id, String status) {
         Pedido pedido = pedidoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado"));
         pedido.setStatus(status);
         return pedidoRepository.save(pedido);
     }

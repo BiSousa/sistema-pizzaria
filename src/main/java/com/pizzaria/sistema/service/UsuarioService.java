@@ -22,14 +22,16 @@ public class UsuarioService {
     }
 
     public Usuario salvar(Usuario usuario) {
-        // regra de negócio: todo novo usuário é CLIENTE por padrão
+        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email já cadastrado");
+        }
+
         if (usuario.getTipo() == null) {
             usuario.setTipo("CLIENTE");
         }
 
-        // criptografa a senha antes de salvar
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-
         return usuarioRepository.save(usuario);
     }
+
 }
