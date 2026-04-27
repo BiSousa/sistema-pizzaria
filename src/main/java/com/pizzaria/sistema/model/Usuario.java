@@ -1,6 +1,8 @@
 package com.pizzaria.sistema.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,7 +16,9 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private String tipo; // ADMIN ou CLIENTE
+
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario tipo;
 
     public Long getId() {
         return id;
