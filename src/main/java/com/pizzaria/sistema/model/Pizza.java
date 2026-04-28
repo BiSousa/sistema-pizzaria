@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-import com.pizzaria.sistema.model.Categoria;
-
 @Entity
 public class Pizza {
     @Id
