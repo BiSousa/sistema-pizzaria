@@ -4,13 +4,16 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import com.pizzaria.sistema.model.Categoria;
+
 @Entity
 public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String tamanho; // BROTO ou GRANDE
+    @Enumerated(EnumType.STRING)
+    private TamanhoPizza tamanho;
     private Double preco;
 
     @ManyToOne
