@@ -30,11 +30,11 @@ public class Pizza {
         this.id = id;
     }
 
-    public String getTamanho() {
+    public TamanhoPizza getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(String tamanho) {
+    public void setTamanho(TamanhoPizza tamanho) {
         this.tamanho = tamanho;
     }
 
