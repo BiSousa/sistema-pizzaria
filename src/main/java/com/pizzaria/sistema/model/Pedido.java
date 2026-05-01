@@ -11,7 +11,7 @@ public class Pedido {
     private Long id;
 
     private String enderecoEntrega;
-    private String status; // PENDENTE, CONFIRMADO, REJEITADO
+    private StatusPedido status;
 
     @ManyToOne
     private Usuario cliente;
@@ -37,11 +37,11 @@ public class Pedido {
         this.enderecoEntrega = enderecoEntrega;
     }
 
-    public String getStatus() {
+    public StatusPedido getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusPedido status) {
         this.status = status;
     }
 
