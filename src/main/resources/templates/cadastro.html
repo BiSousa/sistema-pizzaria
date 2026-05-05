@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Cadastro — Pizzaria</title>
+</head>
+<body>
+<h1>Criar conta</h1>
+<p th:if="${erro}" th:text="${erro}" style="color:red"></p>
+<form th:action="@{/cadastro}" method="post">
+    <label>Nome: <input type="text" name="nome" required/></label><br/>
+    <label>Email: <input type="email" name="email" required/></label><br/>
+    <label>Senha: <input type="password" name="senha" required/></label><br/>
+    <label>Tipo:
+        <select name="tipo" onchange="toggleAdmin(this)">
+            <option value="CLIENTE">Cliente</option>
+            <option value="ADMIN">Administrador</option>
+        </select>
+    </label><br/>
+    <div id="adminDiv" style="display:none">
+        <label>Código admin: <input type="password" name="codigoAdmin" id="codigoAdmin"/></label><br/>
+    </div>
+    <button type="submit">Cadastrar</button>
+</form>
+<a th:href="@{/}">Voltar</a>
+<script>
+    function toggleAdmin(select) {
+        document.getElementById('adminDiv').style.display =
+            select.value === 'ADMIN' ? 'block' : 'none';
+    }
+</script>
+</body>
+</html>

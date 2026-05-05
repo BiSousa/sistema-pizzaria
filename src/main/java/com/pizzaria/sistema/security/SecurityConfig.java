@@ -22,10 +22,16 @@ public class SecurityConfig {
                 .userDetailsService(userDetailsService)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/usuarios").permitAll()
+                        .requestMatchers("/", "/login", "/cadastro").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/pizzas/**").hasAnyRole("ADMIN", "CLIENTE")
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/pizzas/**").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/pizzas/**").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/pizzas/**").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/pedidos/**").hasAnyRole("ADMIN", "CLIENTE")
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/pedidos/**").hasAnyRole("ADMIN", "CLIENTE")
+                        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/pedidos/**").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/pedidos/**").hasRole("ADMIN")
                         .requestMatchers("/categorias/**", "/ingredientes/**", "/usuarios/**").hasRole("ADMIN")
-                        .requestMatchers("/pizzas/**", "/pedidos/**").hasAnyRole("ADMIN", "CLIENTE")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -34,7 +40,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/")
                         .permitAll()
                 )
                 .csrf(csrf -> csrf

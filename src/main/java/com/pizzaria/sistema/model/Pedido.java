@@ -11,6 +11,8 @@ public class Pedido {
     private Long id;
 
     private String enderecoEntrega;
+
+    @Enumerated(EnumType.STRING)
     private StatusPedido status;
 
     @ManyToOne
